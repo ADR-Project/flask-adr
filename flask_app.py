@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask import jsonify
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -54,13 +55,9 @@ def do_for_user(drug_name, temp, pressure):
     return result
 
 
-@app.route("/test")
-def hello():
-    d = {
-        'status': 'SUCCESS',
-        'data': []
-    }
-    return jsonify(d)
+@app.route("/")
+def home():
+    return render_template('home.html', title='Home')
 
 
 @app.route("/do")
