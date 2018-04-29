@@ -20,7 +20,7 @@ def do_for_user(drug_name, temp, pressure):
     returns list of dictionarys containing drug, reaction and prr
     """
     data = requests.get(
-        "https://api.thingspeak.com/channels/428295/feeds.json?api_key=GJE5KVVNGI5893O6&results={}".format(38))
+        "https://api.thingspeak.com/channels/428295/feeds.json?api_key=GJE5KVVNGI5893O6&results={}".format(46))
     jf = str(data.text)
     json_data = json.loads(jf)
     prr_data = json_data['feeds']
