@@ -20,7 +20,7 @@ def do_for_user(drug_name, temp, pressure):
     returns list of dictionarys containing drug, reaction and prr
     """
     data = requests.get(
-        "https://api.thingspeak.com/channels/428295/feeds.json?api_key=GJE5KVVNGI5893O6&results={}".format(38))
+        "https://api.thingspeak.com/channels/428295/feeds.json?api_key=GJE5KVVNGI5893O6&results={}".format(46))
     jf = str(data.text)
     json_data = json.loads(jf)
     prr_data = json_data['feeds']
@@ -34,7 +34,7 @@ def do_for_user(drug_name, temp, pressure):
     drug_data = list()
     for data in csv_data_drug:
         if data['field2'] == drug_name:
-            if data['field4'] > temp or data['field5'] < temp or data['field6'] > pressure or data['field7'] < pressure:
+            if num(data['field4']) > num(temp) or num(data['field5']) < num(temp) or num(data['field6']) > num(pressure) or num(data['field7']) < num(pressure):
                 data['prr'] = None
                 drug_data.append(data)
 
