@@ -34,7 +34,7 @@ def do_for_user(drug_name, temp, pressure):
     drug_data = list()
     for data in csv_data_drug:
         if data['field2'] == drug_name:
-            if num(data['field4']) > num(temp) or num(data['field5']) < num(temp) or num(data['field6']) > num(pressure) or num(data['field7']) < num(pressure):
+            if data['field4'] > temp or data['field5'] < temp or data['field6'] > pressure or data['field7'] < pressure:
                 data['prr'] = None
                 drug_data.append(data)
 
