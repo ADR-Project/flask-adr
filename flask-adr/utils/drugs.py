@@ -55,7 +55,7 @@ def get_drug_details(drug_name, temp, pressure):
 
     for drug in drug_details:
         if drug[NAME] == drug_name:
-            if float(temp) < float(drug[TEMP_MIN]) or float(temp) > float(drug[TEMP_MAX]) and \
+            if float(temp) < float(drug[TEMP_MIN]) or float(temp) > float(drug[TEMP_MAX]) or \
                     float(pressure) < float(drug[PRESSURE_MIN]) or float(pressure) > float(drug[PRESSURE_MAX]):
                 drug_data.append(drug)
     # find prr value from prr data and add to result
