@@ -1,16 +1,27 @@
-<!doctype html>
-<title>{% block title %}{% endblock %} -ADR Project</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-    <h1>
-        <a href="{{ url_for('home') }}">ADR Project</a>
-    </h1>
-</nav>
-<section class="content">
-    <header>
-        {% block header %}{% endblock %}
-    </header>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %} {% block content %}{% endblock %}
-</section>
+<html>
+
+<head>
+    {% if title %}
+    <title>{{ title }} - ADR</title>
+    {% else %}
+    <title>Welcome to ADR</title>
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        ADR:
+        <a href="{{ url_for('home') }}">Home</a> {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Login</a> {% else %}
+        <a href="{{ url_for('logout') }}">Logout</a> {% endif %}
+    </div>
+    <hr> {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %} {% block content %}{% endblock %}
+</body>
+
+</html>
