@@ -1,13 +1,12 @@
-
-from .forms import LoginForm, RegistrationForm
-from .models import User
-from flask import (Flask, flash, jsonify, redirect, render_template, request,
-                   url_for)
+from app import app, db
+from app.forms import LoginForm, RegistrationForm
+from app.models import User
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 
-from .utils import get_drug_details
-from . import app
+
+from utils import get_drug_details
 
 
 @app.route("/")
