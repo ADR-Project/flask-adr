@@ -116,6 +116,12 @@ def get_auth_token():
     return jsonify({'token': token.decode('ascii'), 'duration': 600})
 
 
+@app.route('/api/resource')
+@auth.login_required
+def get_resource():
+    return jsonify({'data': 'Hello, %s!' % g.user.email})
+
+
 @app.route('/api/users', methods=['POST'])
 def new_user():
     try:
