@@ -41,6 +41,19 @@ class User(UserMixin, db.Model):
         return user
 
 
+class SearchHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    drug_name = db.Column(db.String(64))
+    temperature = db.Column(db.String(64))
+    pressure = db.Column(db.String(64))
+    patient_name = db.Column(db.String(64))
+    doctor_email = db.Column(db.String(120), index=True)
+    patient_email = db.Column(db.String(120), index=True)
+
+    def __repr__(self):
+        return '<Doctor {}>'.format(self.doctor_email)
+
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

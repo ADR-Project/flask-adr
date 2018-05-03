@@ -1,6 +1,6 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, SearchHistory
 from flask import (flash, g, jsonify, redirect, render_template, request,
                    url_for)
 from flask_httpauth import HTTPBasicAuth
@@ -25,6 +25,9 @@ def get_do():
         drug_name = request.args['drug_name']
         temp = request.args['temp']
         pressure = request.args['pressure']
+        patient_name = request.args['patient_name']
+        doctor_email = request.args['doctor_email']
+        patient_email = request.args['patient_email']
     except KeyError as err:
         d = {
             "status": "error",
@@ -32,6 +35,16 @@ def get_do():
                 field=err.args[0]),
         }
     else:
+        search = SearchHistory(
+            drug_name=drug_name,
+            temperature=temp,
+            pressure=pressure,
+            patient_name=patient_name,
+            doctor_email=doctor_email,
+            patient_email=patient_email,
+        )
+        db.session.add(search)
+        db.session.commit()
         result = get_drug_details(
             drug_name=drug_name, temp=temp, pressure=pressure
         )
@@ -154,6 +167,41 @@ def new_user():
             },
         }
     )
+
+
+@app.route("/history")
+def get_history():
+    try:
+        doctor_email = request.args['doctor_email']
+    except KeyError as err:
+        d = {
+            "status": "error",
+            "message": "{field} parameter missing".format(
+                field=err.args[0]),
+        }
+        return jsonify(d)
+    else:
+        search = SearchHistory.query.filter_by(doctor_email=doctor_email)
+        if search.count() == 0:
+            d = {
+                "status": "error",
+                "message": "No drug data found",
+            }
+            return jsonify(d)
+
+        result = [
+            {'patient_name': i.patient_name,
+             'doctor_email': i.doctor_email,
+             'patient_email': i.patient_email,
+             'drug_name': i.drug_name,
+             'temprature': i.temperature,
+             'pressure': i.pressure} for i in search
+        ]
+        d = {
+            'status': 'SUCCESS',
+            'data': result,
+        }
+        return jsonify(d)
 
 
 if __name__ == '__main__':

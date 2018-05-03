@@ -48,3 +48,9 @@ http://127.0.0.1:5000/api/resource
 pass
 
 token obtained from token api in auth headers
+
+
+Run
+------------
+FLASK_APP=flask_adr.py
+flask run
