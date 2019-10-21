@@ -18,7 +18,7 @@ requests==2.18.4
 six==1.11.0
 SQLAlchemy==1.2.7
 urllib3==1.22
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 WTForms==2.1
 passlib==1.7.1
 Flask-HTTPAuth==3.2.3
